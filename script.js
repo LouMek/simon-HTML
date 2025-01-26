@@ -10,24 +10,16 @@ const yellowBtn = document.getElementById("yellowBtn");
 var debugText = document.getElementById("debugText");
 var playerText = document.getElementById("playerText");
 
-randomColour.push(redBtn.name);
+randomColour.push("red");
+debugText.innerHTML = displayRandomColour();
 
 const tabBtn = [greenBtn, redBtn, blueBtn, yellowBtn];
 
 for (let btn of tabBtn) {
     btn.addEventListener("click", () => {
         storePressedButtons.push(btn.name);
-        console.table(randomColour);
-        console.table(storePressedButtons);
-
-        isCorrect()
-        addRandomColour()
-        console.table(randomColour);
-
-
-
+        isCorrect(storePressedButtons.length - 1);
         debugText.innerHTML = displayRandomColour();
-
         playerText.innerHTML = displayPlayerColour();
 
     });
@@ -58,11 +50,14 @@ function displayPlayerColour() {
     return textPlayerColour;
 }
 
-function isCorrect() {
 
-    if (storePressedButtons[storePressedButtons.length - 1] != randomColour[randomColour.length - 1]) {
+function isCorrect(i) {
+    if (storePressedButtons[i] != randomColour[i]) {
         storePressedButtons.splice(0, storePressedButtons.length);
-        randomColour = ["red"];
+        randomColour.splice(1, randomColour.length);
     }
-
+    if (i == randomColour.length - 1) {
+        storePressedButtons.splice(0, storePressedButtons.length);
+        addRandomColour();
+    }
 }
