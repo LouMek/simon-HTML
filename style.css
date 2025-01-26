@@ -20,24 +20,23 @@ body {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1;
-    opacity: 0;
-    /* switch to 1 later*/
+    opacity: 1;
 }
 
 .greenSquare {
-    background-color: #2ee21a;
+    background-color: #1aff00;
 }
 
 .redSquare {
-    background-color: #e21a1a;
+    background-color: #ff0000;
 }
 
 .blueSquare {
-    background-color: #1a24e2;
+    background-color: #000dff;
 }
 
 .yellowSquare {
-    background-color: #e2ce1a;
+    background-color: #f6ff00;
 }
 
 .game {

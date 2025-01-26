@@ -1,5 +1,5 @@
 var storePressedButtons = new Array();
-var randomColour = new Array();
+var randomColor = new Array();
 
 
 const greenBtn = document.getElementById("greenBtn");
@@ -10,54 +10,92 @@ const yellowBtn = document.getElementById("yellowBtn");
 var debugText = document.getElementById("debugText");
 var playerText = document.getElementById("playerText");
 
-randomColour.push("red");
-debugText.innerHTML = displayRandomColour();
+randomColor.push("red");
+debugText.innerHTML = displayRandomColor();
 
 const tabBtn = [greenBtn, redBtn, blueBtn, yellowBtn];
 
-for (let btn of tabBtn) {
+showSequence();
+
+tabBtn.forEach(btn =>
     btn.addEventListener("click", () => {
         storePressedButtons.push(btn.name);
         isCorrect(storePressedButtons.length - 1);
-        debugText.innerHTML = displayRandomColour();
-        playerText.innerHTML = displayPlayerColour();
+        debugText.innerHTML = displayRandomColor();
+        playerText.innerHTML = displayPlayerColor();
 
-    });
-}
+    })
+);
 
-
-function addRandomColour() {
-    let colour = ["green", "red", "blue", "yellow"];
+function addRandomColor() {
+    let color = ["green", "red", "blue", "yellow"];
     let number = Math.floor(Math.random() * 4);
-    randomColour.push(colour[number]);
+    randomColor.push(color[number]);
 }
 
 //Debug fonction
-function displayRandomColour() {
-    let textRandomColour = "";
-    randomColour.forEach((colour) => {
-        textRandomColour = textRandomColour + colour + " ";
+function displayRandomColor() {
+    let textRandomColor = "";
+    randomColor.forEach((color) => {
+        textRandomColor = textRandomColor + color + " ";
     });
-    return textRandomColour;
+    return textRandomColor;
 }
 
 //Debug fonction
-function displayPlayerColour() {
-    let textPlayerColour = "";
-    storePressedButtons.forEach((colour) => {
-        textPlayerColour = textPlayerColour + colour + " ";
+function displayPlayerColor() {
+    let textPlayerColor = "";
+    storePressedButtons.forEach((color) => {
+        textPlayerColor = textPlayerColor + color + " ";
     });
-    return textPlayerColour;
+    return textPlayerColor;
 }
 
 
 function isCorrect(i) {
-    if (storePressedButtons[i] != randomColour[i]) {
+    if (storePressedButtons[i] != randomColor[i]) {
         storePressedButtons.splice(0, storePressedButtons.length);
-        randomColour.splice(1, randomColour.length);
+        randomColor.splice(1, randomColor.length);
     }
-    if (i == randomColour.length - 1) {
+    if (i == randomColor.length - 1) {
         storePressedButtons.splice(0, storePressedButtons.length);
-        addRandomColour();
+        addRandomColor();
+        showSequence();
+
     }
+}
+
+
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function showSequence() {
+    tabBtn.forEach(btn => btn.disabled = true);
+
+    for (let color of randomColor) {
+        tabBtn.forEach(btn => btn.classList.add("isOff"));
+        await delay(200);
+
+        switch (color) {
+            case 'green':
+                greenBtn.classList.remove("isOff");
+                break;
+            case 'red':
+                redBtn.classList.remove("isOff");
+                break;
+            case 'blue':
+                blueBtn.classList.remove("isOff");
+                break;
+            case 'yellow':
+                yellowBtn.classList.remove("isOff");
+                break;
+            default:
+                console.error("Erreur");
+                break;
+        }
+        await delay(1000);
+    }
+    tabBtn.forEach(btn => btn.classList.add("isOff"));
+    tabBtn.forEach(btn => btn.disabled = false);
 }
