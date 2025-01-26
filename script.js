@@ -1,0 +1,101 @@
+var storePressedButtons = new Array();
+var randomColor = new Array();
+
+
+const greenBtn = document.getElementById("greenBtn");
+const redBtn = document.getElementById("redBtn");
+const blueBtn = document.getElementById("blueBtn");
+const yellowBtn = document.getElementById("yellowBtn");
+
+var debugText = document.getElementById("debugText");
+var playerText = document.getElementById("playerText");
+
+randomColor.push("red");
+debugText.innerHTML = displayRandomColor();
+
+const tabBtn = [greenBtn, redBtn, blueBtn, yellowBtn];
+
+showSequence();
+
+tabBtn.forEach(btn =>
+    btn.addEventListener("click", () => {
+        storePressedButtons.push(btn.name);
+        isCorrect(storePressedButtons.length - 1);
+        debugText.innerHTML = displayRandomColor();
+        playerText.innerHTML = displayPlayerColor();
+
+    })
+);
+
+function addRandomColor() {
+    let color = ["green", "red", "blue", "yellow"];
+    let number = Math.floor(Math.random() * 4);
+    randomColor.push(color[number]);
+}
+
+//Debug fonction
+function displayRandomColor() {
+    let textRandomColor = "";
+    randomColor.forEach((color) => {
+        textRandomColor = textRandomColor + color + " ";
+    });
+    return textRandomColor;
+}
+
+//Debug fonction
+function displayPlayerColor() {
+    let textPlayerColor = "";
+    storePressedButtons.forEach((color) => {
+        textPlayerColor = textPlayerColor + color + " ";
+    });
+    return textPlayerColor;
+}
+
+
+function isCorrect(i) {
+    if (storePressedButtons[i] != randomColor[i]) {
+        storePressedButtons.splice(0, storePressedButtons.length);
+        randomColor.splice(1, randomColor.length);
+    }
+    if (i == randomColor.length - 1) {
+        storePressedButtons.splice(0, storePressedButtons.length);
+        addRandomColor();
+        showSequence();
+
+    }
+}
+
+
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function showSequence() {
+    tabBtn.forEach(btn => btn.disabled = true);
+
+    for (let color of randomColor) {
+        tabBtn.forEach(btn => btn.classList.add("isOff"));
+        await delay(200);
+
+        switch (color) {
+            case 'green':
+                greenBtn.classList.remove("isOff");
+                break;
+            case 'red':
+                redBtn.classList.remove("isOff");
+                break;
+            case 'blue':
+                blueBtn.classList.remove("isOff");
+                break;
+            case 'yellow':
+                yellowBtn.classList.remove("isOff");
+                break;
+            default:
+                console.error("Erreur");
+                break;
+        }
+        await delay(1000);
+    }
+    tabBtn.forEach(btn => btn.classList.add("isOff"));
+    tabBtn.forEach(btn => btn.disabled = false);
+}
