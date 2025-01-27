@@ -18,7 +18,10 @@ const tabBtn = [greenBtn, redBtn, blueBtn, yellowBtn];
 showSequence();
 
 tabBtn.forEach(btn =>
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", async () => {
+        btn.classList.remove("isOff");
+        await delay(100);
+        btn.classList.add("isOff");
         storePressedButtons.push(btn.name);
         isCorrect(storePressedButtons.length - 1);
         debugText.innerHTML = displayRandomColor();
@@ -52,7 +55,7 @@ function displayPlayerColor() {
 }
 
 
-function isCorrect(i) {
+async function isCorrect(i) {
     if (storePressedButtons[i] != randomColor[i]) {
         storePressedButtons.splice(0, storePressedButtons.length);
         randomColor.splice(1, randomColor.length);
@@ -60,6 +63,7 @@ function isCorrect(i) {
     if (i == randomColor.length - 1) {
         storePressedButtons.splice(0, storePressedButtons.length);
         addRandomColor();
+        await delay(200);
         showSequence();
 
     }
