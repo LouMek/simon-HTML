@@ -1,5 +1,6 @@
 var storePressedButtons = new Array();
 var randomColor = new Array();
+addRandomColor();
 
 
 const greenBtn = document.getElementById("greenBtn");
@@ -10,8 +11,7 @@ const yellowBtn = document.getElementById("yellowBtn");
 var debugText = document.getElementById("debugText");
 var playerText = document.getElementById("playerText");
 
-randomColor.push("red");
-debugText.innerHTML = displayRandomColor();
+
 
 const tabBtn = [greenBtn, redBtn, blueBtn, yellowBtn];
 
@@ -24,9 +24,6 @@ tabBtn.forEach(btn =>
         btn.classList.add("isOff");
         storePressedButtons.push(btn.name);
         isCorrect(storePressedButtons.length - 1);
-        debugText.innerHTML = displayRandomColor();
-        playerText.innerHTML = displayPlayerColor();
-
     })
 );
 
@@ -36,23 +33,23 @@ function addRandomColor() {
     randomColor.push(color[number]);
 }
 
-//Debug fonction
-function displayRandomColor() {
-    let textRandomColor = "";
-    randomColor.forEach((color) => {
-        textRandomColor = textRandomColor + color + " ";
-    });
-    return textRandomColor;
-}
+// //Debug fonction
+// function displayRandomColor() {
+//     let textRandomColor = "";
+//     randomColor.forEach((color) => {
+//         textRandomColor = textRandomColor + color + " ";
+//     });
+//     return textRandomColor;
+// }
 
-//Debug fonction
-function displayPlayerColor() {
-    let textPlayerColor = "";
-    storePressedButtons.forEach((color) => {
-        textPlayerColor = textPlayerColor + color + " ";
-    });
-    return textPlayerColor;
-}
+// //Debug fonction
+// function displayPlayerColor() {
+//     let textPlayerColor = "";
+//     storePressedButtons.forEach((color) => {
+//         textPlayerColor = textPlayerColor + color + " ";
+//     });
+//     return textPlayerColor;
+// }
 
 
 async function isCorrect(i) {
@@ -63,7 +60,7 @@ async function isCorrect(i) {
     if (i == randomColor.length - 1) {
         storePressedButtons.splice(0, storePressedButtons.length);
         addRandomColor();
-        await delay(200);
+        await delay(500);
         showSequence();
 
     }

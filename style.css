@@ -1,14 +1,15 @@
 body {
     display: flex;
     justify-content: center;
-    margin: auto;
 }
 
 .square {
+    border: 10px solid black;
     height: 200px;
     width: 200px;
     position: relative;
     overflow: hidden;
+
 }
 
 .square.isOff::after {
@@ -25,22 +26,38 @@ body {
 
 .greenSquare {
     background-color: #1aff00;
+    border-radius: 100% 0% 0% 100% / 100% 100% 0% 0%;
 }
 
 .redSquare {
     background-color: #ff0000;
+    border-radius: 0% 100% 100% 0% / 100% 100% 0% 0%;
 }
 
 .blueSquare {
     background-color: #000dff;
+    border-radius: 0% 100% 100% 0% / 0% 0% 100% 100%;
 }
 
 .yellowSquare {
     background-color: #f6ff00;
+    border-radius: 100% 0% 0% 100% / 0% 0% 100% 100%;
 }
 
 .game {
     align-items: center;
-    flex-direction: row;
+    flex-direction: column;
     margin: 5px;
+}
+
+
+.playerButton {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+
+.class {
+    position: absolute;
 }
